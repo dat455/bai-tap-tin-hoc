@@ -1,1 +1,112 @@
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kho Bài Tập Tin Học</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+    header {
+      background: linear-gradient(120deg, #075985, #2563eb);
+      color: white;
+      padding: 38px 20px;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 12px; }
+    header p { margin: 0; }
+    main { max-width: 900px; margin: 25px auto; padding: 0 16px; }
+    input, select {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 16px;
+      background: white;
+    }
+    .problem {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      border: 1px solid #e2e8f0;
+    }
+    .problem h3 { margin: 0 0 10px; color: #1d4ed8; }
+    .tag {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+    footer { text-align: center; padding: 25px; color: #64748b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📚 Kho Bài Tập Tin Học</h1>
+    <p>Nơi chia sẻ đề bài và rèn luyện tư duy lập trình C++</p>
+  </header>
+
+  <main>
+    <h2>Danh sách bài tập</h2>
+    <input id="search" placeholder="🔎 Tìm bài tập theo tên...">
+    <select id="topic">
+      <option value="">Tất cả chủ đề</option>
+      <option value="Số nguyên tố">Số nguyên tố</option>
+      <option value="Mảng">Mảng</option>
+      <option value="Tiền tố">Tiền tố</option>
+      <option value="Map">Map</option>
+    </select>
+    <div id="problems"></div>
+  </main>
+
+  <footer>Kho Bài Tập Tin Học · Cùng nhau học lập trình 💻</footer>
+
+  <script>
+    const data = [
+      {id:"TIN001", name:"Số nguyên tố lớn nhất", topic:"Số nguyên tố",
+       desc:"Tìm số nguyên tố lớn nhất trong đoạn [L, R]."},
+      {id:"TIN002", name:"Tổng các phần tử của mảng", topic:"Mảng",
+       desc:"Tính tổng các phần tử trong dãy số nguyên."},
+      {id:"TIN003", name:"Tổng đoạn con", topic:"Tiền tố",
+       desc:"Tính tổng các phần tử từ vị trí L đến R."},
+      {id:"TIN004", name:"Đếm số lần xuất hiện", topic:"Map",
+       desc:"Đếm số lần xuất hiện của từng giá trị trong dãy."}
+    ];
+
+    function render() {
+      const q = document.getElementById("search").value.toLowerCase();
+      const topic = document.getElementById("topic").value;
+      const list = data.filter(p =>
+        (p.name.toLowerCase().includes(q) ||
+         p.id.toLowerCase().includes(q)) &&
+        (!topic || p.topic === topic)
+      );
+
+      document.getElementById("problems").innerHTML = list.length
+        ? list.map(p => `
+          <article class="problem">
+            <h3>${p.id} · ${p.name}</h3>
+            <span class="tag">${p.topic}</span>
+            <p>${p.desc}</p>
+          </article>
+        `).join("")
+        : "<p>Không tìm thấy bài tập phù hợp.</p>";
+    }
+
+    document.getElementById("search").addEventListener("input", render);
+    document.getElementById("topic").addEventListener("change", render);
+    render();
+  </script>
+</body>
+</html>
+
